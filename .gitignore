@@ -1,0 +1,13 @@
+*.slo
+*.lo
+*.o
+*.so
+*.a
+*.out
+
+obj/
+test_obj/
+
+# Mac OS X
+.DS_Store
+
