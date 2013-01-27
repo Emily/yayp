@@ -10,6 +10,6 @@ Parser::~Parser() {
   delete reader;
 }
 
-Node* Parser::parse() {
+Node Parser::parse() {
   return new Node();
 }

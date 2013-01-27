@@ -1,5 +1,4 @@
 #include "reader.h"
-#include <cstdio>
 
 using namespace YAYP;
 using namespace YAYP::ReaderUtilities;
