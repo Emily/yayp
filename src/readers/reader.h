@@ -10,12 +10,12 @@ class Reader {
 public:
   Reader();
   ~Reader();
-  char operator[](int index);
+  int operator[](int index);
   void pop(int count);
 
 protected:
   std::istream* m_input;
-  std::deque<char> m_buffer;
+  std::deque<int> m_buffer;
   void fillBuffer(int count);
 };
 

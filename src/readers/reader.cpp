@@ -8,7 +8,7 @@ Reader::Reader() {
 Reader::~Reader() {
 }
 
-char Reader::operator[](int index) {
+int Reader::operator[](int index) {
   if ((index + 1) > m_buffer.size()) {
     fillBuffer((index + 1) - m_buffer.size());
   }
