@@ -1,4 +1,5 @@
 #include "utf8_decoder.h"
+#include <cstdio>
 
 using namespace YAYP::ReaderUtilities::Unicode;
 

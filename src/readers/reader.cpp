@@ -1,11 +1,17 @@
 #include "reader.h"
+#include <cstdio>
 
 using namespace YAYP;
+using namespace YAYP::ReaderUtilities;
 
 Reader::Reader() {
+  m_decoder = 0;
 }
 
 Reader::~Reader() {
+  if (m_decoder) {
+    delete m_decoder;
+  }
 }
 
 int Reader::operator[](int index) {
@@ -30,7 +36,17 @@ void Reader::pop(int count) {
 void Reader::fillBuffer(int count) {
   for (int i = 0; i < count; i++) {
     if (m_input->good()) {
-      m_buffer.push_back(m_input->get());
+      m_buffer.push_back(m_decoder->getNextValue());
     }
+  }
+}
+
+void Reader::setupDecoder() {
+  Unicode::Detector detector;
+  Unicode::Encoding encoding = detector.getEncoding(*m_input);
+
+  switch(encoding) {
+    default:
+      m_decoder = new Unicode::UTF8Decoder(m_input);
   }
 }
