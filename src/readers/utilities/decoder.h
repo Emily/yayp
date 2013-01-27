@@ -8,8 +8,10 @@ namespace Unicode {
 
 class Decoder {
 public:
-
+  Decoder(std::istream* input) : m_input(input) {};
+  virtual int getNextValue();
 private:
+  std::istream* m_input;
 };
 
 }

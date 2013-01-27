@@ -1,7 +1,5 @@
 #include "detector.h"
 
-#include <cstdio>
-
 using namespace YAYP::ReaderUtilities::Unicode;
 
 // determine encoding based on
@@ -15,8 +13,24 @@ Encoding Detector::getEncoding(std::istream& input) {
 
   encoding = checkForExplicitBOM(leadingBytes);
 
-  if (encoding == UNKNOWN) {
+  if (encoding != UNKNOWN) {
+    //ensure get pointer is in right position
+    switch(encoding) {
+      case UTF16BE:
+      case UTF16LE:
+        input.seekg(2);
+        break;
+      case UTF8:
+        input.seekg(3);
+        break;
+      default:
+        break;
+    }
+
+  } else {
+    //no BOM, infer encoding
     encoding = inferEncoding(leadingBytes);
+    input.seekg(std::ios::beg);
   }
 
   delete[] leadingBytes;
