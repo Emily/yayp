@@ -2,8 +2,9 @@
 
 using namespace YAYP;
 
-StringReader::StringReader(std::string input) {
+StringReader::StringReader(std::string input) : Reader() {
   m_input = new std::istringstream(input, std::istringstream::binary);
+  setupDecoder();
 }
 
 StringReader::~StringReader() {
