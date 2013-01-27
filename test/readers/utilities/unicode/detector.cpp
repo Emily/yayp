@@ -2,10 +2,8 @@
 #include <iostream>
 #include <sstream>
 
-#include <cstdio>
-
 #include "gtest/gtest.h"
-#include "readers/utilities/detector.h"
+#include "readers/utilities/unicode/detector.h"
 
 using namespace YAYP::ReaderUtilities::Unicode;
 
