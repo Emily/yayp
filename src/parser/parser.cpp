@@ -11,5 +11,5 @@ Parser::~Parser() {
 }
 
 Node Parser::parse() {
-  return new Node();
+  return Node();
 }

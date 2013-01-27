@@ -10,7 +10,7 @@ class Parser {
 public:
   Parser(std::string filename);
   ~Parser();
-  Node* parse();
+  Node parse();
 private:
   FileReader* reader;
 };
