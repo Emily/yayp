@@ -30,6 +30,8 @@ void Reader::pop(int count) {
   for (int i = 0; i < count ; i++) {
     m_buffer.pop_front();
   }
+
+  m_index += count;
 }
 
 void Reader::fillBuffer(int count) {

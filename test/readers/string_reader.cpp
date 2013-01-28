@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "readers/string_reader.h"
 
+namespace StringReaderTest {
+
 std::string test_string("abcdefghijklmnopqrstuvwxyz");
 
 TEST(StringReader, LoadsString) {
@@ -21,4 +23,6 @@ TEST(StringReader, PopBeforeAccess) {
   YAYP::StringReader reader(test_string);
   reader.pop(2);
   EXPECT_EQ(reader[0], 'c');
+}
+
 }

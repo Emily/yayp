@@ -1,5 +1,6 @@
 MACHINE = $(shell uname -s)
-SOURCE_DIRS = nodes parser readers readers/utilities/unicode
+SOURCE_DIRS = lexer lexer/tokens nodes \
+							parser readers readers/utilities/unicode
 TEST_DIRS = gtest/src $(SOURCE_DIRS)
 
 CXX = g++
