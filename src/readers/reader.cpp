@@ -36,9 +36,7 @@ void Reader::pop(int count) {
 
 void Reader::fillBuffer(int count) {
   for (int i = 0; i < count; i++) {
-    if (m_input->good()) {
-      m_buffer.push_back(m_decoder->getNextValue());
-    }
+    m_buffer.push_back(m_decoder->getNextValue());
   }
 }
 

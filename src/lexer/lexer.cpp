@@ -30,6 +30,10 @@ Tokens::Token* Lexer::nextToken() {
 
 void Lexer::getMoreTokens() {
   scanToNextToken();
+
+  if (isEndOfStream()) {
+    return;
+  }
 }
 
 //we're counting comments as whitespace
@@ -75,6 +79,15 @@ void Lexer::eatLineBreak() {
   m_line += 1;
   m_column = 0;
   m_index += 1;
+}
+
+int Lexer::isEndOfStream() {
+  if ((*m_reader)[0] == -1) {
+    m_tokens.push(new Tokens::StreamEnd());
+    return true;
+  }
+
+  return false;
 }
 
 int Lexer::isLineBreakAt(int index) {

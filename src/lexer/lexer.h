@@ -1,6 +1,7 @@
 #pragma once
 
 #include <queue>
+#include <stack>
 
 #include "tokens/tokens.h"
 #include "../readers/reader.h"
@@ -27,6 +28,7 @@ private:
   void eatComment();
   void eatLineBreak();
 
+  int isEndOfStream();
   int isLineBreakAt(int index);
 };
 

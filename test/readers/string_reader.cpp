@@ -5,6 +5,12 @@ namespace StringReaderTest {
 
 std::string test_string("abcdefghijklmnopqrstuvwxyz");
 
+TEST(StringReader, CharacterAfterEOS) {
+  std::string str(" ");
+  YAYP::StringReader reader(str);
+  EXPECT_EQ(reader[1], -1);
+}
+
 TEST(StringReader, LoadsString) {
   YAYP::StringReader reader(test_string);
   EXPECT_EQ(reader[0], 'a');

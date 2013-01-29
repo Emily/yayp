@@ -7,6 +7,14 @@
 
 using namespace YAYP::ReaderUtilities::Unicode;
 
+TEST(UTF8Decoder, getValuesPastEOF) {
+  std::istringstream stream(std::string("a"));
+  UTF8Decoder decoder(&stream);
+  EXPECT_EQ('a', decoder.getNextValue());
+  EXPECT_EQ(-1, decoder.getNextValue());
+  EXPECT_EQ(-1, decoder.getNextValue());
+}
+
 TEST(UTF8Decoder, getNextValue1b) {
   std::istringstream stream(std::string("abc"));
   UTF8Decoder decoder(&stream);

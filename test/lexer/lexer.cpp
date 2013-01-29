@@ -17,6 +17,22 @@ TEST(Lexer, StreamStart) {
   delete token;
 }
 
+TEST(Lexer, StreamEnd) {
+  std::string test_string(" ");
+  YAYP::StringReader* reader = new YAYP::StringReader(test_string);
+  YAYP::Lexer lexer(reader);
+
+  YAYP::Tokens::Token* token = lexer.nextToken();
+  EXPECT_EQ(YAYP::Tokens::Type::StreamStart, token->type());
+  delete token;
+
+  token = lexer.nextToken();
+  EXPECT_EQ(YAYP::Tokens::Type::StreamEnd, token->type());
+
+  delete reader;
+  delete token;
+}
+
 TEST(Lexer, EatWhitespace) {
   std::string test_string("  #comment\nabc");
   YAYP::StringReader* reader = new YAYP::StringReader(test_string);

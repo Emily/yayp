@@ -1,6 +1,11 @@
 #include "gtest/gtest.h"
 #include "readers/file_reader.h"
 
+TEST(FileReader, CharacterAfterEOF) {
+  YAYP::FileReader reader("test/data/reader_test_file2");
+  EXPECT_EQ(reader[1], -1);
+}
+
 TEST(FileReader, LoadsFile) {
   YAYP::FileReader reader("test/data/reader_test_file1");
   EXPECT_EQ(reader[0], 'a');
