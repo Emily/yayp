@@ -22,7 +22,10 @@ private:
   int m_index;
 
   void getMoreTokens();
-  void eatWhiteSpace();
+  void scanToNextToken();
+  void eatWhitespace();
+  void eatComment();
+  bool eatLineBreak();
 
   int isLineBreakAt(int index);
 };

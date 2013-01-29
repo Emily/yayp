@@ -29,44 +29,54 @@ Tokens::Token* Lexer::nextToken() {
 }
 
 void Lexer::getMoreTokens() {
-  eatWhiteSpace();
+  scanToNextToken();
 }
 
 //we're counting comments as whitespace
-void Lexer::eatWhiteSpace() {
+void Lexer::scanToNextToken() {
   int count = 0;
 
   while(true) {
-    //whitespace
-    while ((*m_reader)[0] == ' ') {
-      m_column += 1;
-      m_index += 1;
-      m_reader->pop(1);
-    }
-
-    //comment
-    if ((*m_reader)[0] == '#') {
-      while (!isLineBreakAt(0)) {
-        m_column += 1;
-        m_index += 1;
-        m_reader->pop(1);
-      }
-    }
-
-    if (isLineBreakAt(0)) {
-      if ((*m_reader)[0] == '\r' || (*m_reader)[1] == '\n') {
-        m_reader->pop(2);
-      } else {
-        m_reader->pop(1);
-      }
-
-      m_line += 1;
-      m_column = 0;
-      m_index += 1;
-    } else {
+    eatWhitespace();
+    eatComment();
+    if (!eatLineBreak()) {
       break;
     }
   }
+}
+
+void Lexer::eatWhitespace() {
+  while ((*m_reader)[0] == ' ') {
+    m_column += 1;
+    m_index += 1;
+    m_reader->pop(1);
+  }
+}
+
+void Lexer::eatComment() {
+  if ((*m_reader)[0] == '#') {
+    while (!isLineBreakAt(0)) {
+      m_reader->pop(1);
+    }
+  }
+}
+
+bool Lexer::eatLineBreak() {
+  if (isLineBreakAt(0)) {
+    if ((*m_reader)[0] == '\r' || (*m_reader)[1] == '\n') {
+      m_reader->pop(2);
+    } else {
+      m_reader->pop(1);
+    }
+
+    m_line += 1;
+    m_column = 0;
+    m_index += 1;
+  } else {
+    return false;
+  }
+
+  return true;
 }
 
 int Lexer::isLineBreakAt(int index) {
