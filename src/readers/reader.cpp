@@ -5,6 +5,7 @@ using namespace YAYP::ReaderUtilities;
 
 Reader::Reader() {
   m_decoder = 0;
+  m_index = 0;
 }
 
 Reader::~Reader() {

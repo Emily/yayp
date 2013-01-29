@@ -5,6 +5,11 @@ using namespace YAYP;
 Lexer::Lexer(Reader* reader) {
   m_reader = reader;
   m_tokens.push(new Tokens::StreamStart());
+  m_states.push(IN_STREAM);
+
+  m_line = 0;
+  m_column = 0;
+  m_index = 0;
 }
 
 Lexer::~Lexer() {
@@ -31,8 +36,12 @@ Tokens::Token* Lexer::nextToken() {
 void Lexer::getMoreTokens() {
   scanToNextToken();
 
-  if (isEndOfStream()) {
+  if (checkForEndOfStream()) {
     return;
+  }
+
+  if (checkForDirective()) {
+    //TODO: handle directives instead of eating them
   }
 }
 
@@ -81,9 +90,29 @@ void Lexer::eatLineBreak() {
   m_index += 1;
 }
 
-int Lexer::isEndOfStream() {
+int Lexer::checkForDirective() {
+  // TODO: Actually grab directives, they're mostly (other than version)
+  //   presentation details, and so we can pretty much discard them
+  //   since we don't do any emitting... yet.
+
+  // just eat the directives for now
+  if ((*m_reader)[0] == '%') {
+    while (!isLineBreakAt(0)) {
+      m_reader->pop(1);
+    }
+
+    eatLineBreak();
+
+    return true;
+  }
+
+  return false;
+}
+
+int Lexer::checkForEndOfStream() {
   if ((*m_reader)[0] == -1) {
     m_tokens.push(new Tokens::StreamEnd());
+    m_states.pop();
     return true;
   }
 

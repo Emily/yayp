@@ -15,8 +15,16 @@ public:
 
   Tokens::Token* nextToken();
 private:
+  enum State {
+    IN_STREAM,
+    IN_DOCUMENT,
+    IN_MAPPING,
+    IN_SEQUENCE
+  };
+
   Reader* m_reader;
   std::queue<Tokens::Token*> m_tokens;
+  std::queue<State> m_states;
 
   int m_line;
   int m_column;
@@ -28,7 +36,8 @@ private:
   void eatComment();
   void eatLineBreak();
 
-  int isEndOfStream();
+  int checkForDirective();
+  int checkForEndOfStream();
   int isLineBreakAt(int index);
 };
 
