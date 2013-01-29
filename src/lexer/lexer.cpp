@@ -40,8 +40,11 @@ void Lexer::getMoreTokens() {
     return;
   }
 
-  if (checkForDirective()) {
-    //TODO: handle directives instead of eating them
+  //eat directives ANY directives for now
+  while((*m_reader)[0] == '%') {
+    if (checkForDirective()) {
+      //TODO: handle directives instead of eating them
+    }
   }
 }
 

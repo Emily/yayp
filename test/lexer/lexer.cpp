@@ -63,14 +63,14 @@ TEST(Lexer, EatComments) {
 
 // TODO: Handle directives properly
 TEST(Lexer, EatDirectives) {
-  std::string test_string("%YAML 1.2\nabc");
+  std::string test_string("%YAML 1.2\n%TAG\nabc");
   YAYP::StringReader* reader = new YAYP::StringReader(test_string);
   YAYP::Lexer lexer(reader);
 
   YAYP::Tokens::Token* token = lexer.nextToken();
   delete token;
   token = lexer.nextToken();
-  EXPECT_GE(10, reader->index());
+  EXPECT_GE(15, reader->index());
 
   delete reader;
   delete token;
