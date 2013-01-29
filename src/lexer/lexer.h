@@ -5,6 +5,8 @@
 
 #include "tokens/tokens.h"
 #include "../readers/reader.h"
+#include "position.h"
+#include "simple_key.h"
 
 namespace YAYP {
 
@@ -25,10 +27,10 @@ private:
   Reader* m_reader;
   std::queue<Tokens::Token*> m_tokens;
   std::queue<State> m_states;
+  std::stack<SimpleKey> m_potential_simple_keys;
+  std::stack<Position> m_positions;
 
-  int m_line;
-  int m_column;
-  int m_index;
+  Position m_position;
 
   void getMoreTokens();
   void scanToNextToken();
@@ -38,6 +40,7 @@ private:
 
   int checkForDirective();
   int checkForEndOfStream();
+  int checkForPlainScalar();
   int isLineBreakAt(int index);
 };
 

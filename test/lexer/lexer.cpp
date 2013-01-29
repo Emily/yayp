@@ -77,7 +77,7 @@ TEST(Lexer, EatDirectives) {
 }
 
 TEST(Lexer, Scalar) {
-  std::string test_string("abcdefghijklmnopqrstuvwxyz");
+  std::string test_string("abc");
   YAYP::StringReader* reader = new YAYP::StringReader(test_string);
   YAYP::Lexer lexer(reader);
 

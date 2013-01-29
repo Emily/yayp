@@ -7,9 +7,9 @@ Lexer::Lexer(Reader* reader) {
   m_tokens.push(new Tokens::StreamStart());
   m_states.push(IN_STREAM);
 
-  m_line = 0;
-  m_column = 0;
-  m_index = 0;
+  m_position.line = 0;
+  m_position.column = 0;
+  m_position.index = 0;
 }
 
 Lexer::~Lexer() {
@@ -41,7 +41,7 @@ void Lexer::getMoreTokens() {
   }
 
   //eat directives ANY directives for now
-  while((*m_reader)[0] == '%') {
+  while((*m_reader)[0] == '%' && m_position.column == 0) {
     if (checkForDirective()) {
       //TODO: handle directives instead of eating them
     }
@@ -67,8 +67,8 @@ void Lexer::scanToNextToken() {
 
 void Lexer::eatWhitespace() {
   while ((*m_reader)[0] == ' ') {
-    m_column += 1;
-    m_index += 1;
+    m_position.column += 1;
+    m_position.index += 1;
     m_reader->pop(1);
   }
 }
@@ -88,9 +88,9 @@ void Lexer::eatLineBreak() {
     m_reader->pop(1);
   }
 
-  m_line += 1;
-  m_column = 0;
-  m_index += 1;
+  m_position.line += 1;
+  m_position.column = 0;
+  m_position.index += 1;
 }
 
 int Lexer::checkForDirective() {
