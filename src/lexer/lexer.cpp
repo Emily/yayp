@@ -39,10 +39,14 @@ void Lexer::scanToNextToken() {
   while(true) {
     eatWhitespace();
     eatComment();
-    if (!eatLineBreak()) {
+
+    if (isLineBreakAt(0)) {
+      eatLineBreak();
+    } else {
       break;
     }
   }
+
 }
 
 void Lexer::eatWhitespace() {
@@ -61,22 +65,16 @@ void Lexer::eatComment() {
   }
 }
 
-bool Lexer::eatLineBreak() {
-  if (isLineBreakAt(0)) {
-    if ((*m_reader)[0] == '\r' || (*m_reader)[1] == '\n') {
-      m_reader->pop(2);
-    } else {
-      m_reader->pop(1);
-    }
-
-    m_line += 1;
-    m_column = 0;
-    m_index += 1;
+void Lexer::eatLineBreak() {
+  if ((*m_reader)[0] == '\r' || (*m_reader)[1] == '\n') {
+    m_reader->pop(2);
   } else {
-    return false;
+    m_reader->pop(1);
   }
 
-  return true;
+  m_line += 1;
+  m_column = 0;
+  m_index += 1;
 }
 
 int Lexer::isLineBreakAt(int index) {

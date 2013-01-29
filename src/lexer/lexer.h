@@ -25,7 +25,7 @@ private:
   void scanToNextToken();
   void eatWhitespace();
   void eatComment();
-  bool eatLineBreak();
+  void eatLineBreak();
 
   int isLineBreakAt(int index);
 };
